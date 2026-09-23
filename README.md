@@ -107,3 +107,42 @@ The platform provides:
                   │ Security Report         │
                   │ PDF / JSON / CSV        │
                   └─────────────────────────┘
+
+## Architecture
+
+```text
+┌───────────────────────────┐
+│      React Frontend       │
+│                           │
+│ Dashboard                 │
+│ Assessments               │
+│ Findings                  │
+│ Reports                   │
+│ Authentication            │
+└─────────────┬─────────────┘
+              │
+              │ REST / SSE
+              ▼
+┌───────────────────────────┐
+│      FastAPI Backend      │
+│                           │
+│ Authentication            │
+│ Assessment APIs           │
+│ Assessment Engine         │
+│ Findings                  │
+│ Retesting                 │
+│ Reports                   │
+│ Database                  │
+└─────────────┬─────────────┘
+              │
+              ▼
+┌───────────────────────────┐
+│    Assessment Engines     │
+│                           │
+│ URL Analysis              │
+│ ZIP Analysis              │
+│ Security Checks           │
+│ Knowledge Base            │
+└───────────────────────────┘
+
+**ONE URL or ONE ZIP → AUTOMATIC SECURITY ASSESSMENT → FINDINGS → RISK SCORE → REMEDIATION → RETEST → REPORT**
