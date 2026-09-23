@@ -1,61 +1,109 @@
-# VULNIX — Security Assessment Platform
+# VULNIX
 
-Full-stack app: FastAPI backend performing real, passive security checks
-(headers, TLS, ZIP static analysis) + a React/Tailwind frontend fully wired
-to it. No mock data — every screen reflects what the backend actually found.
+## Full-Spectrum Security Assessment & Penetration Testing Platform
 
-```
-vulnix-project/
-├── backend/     FastAPI API, SQLite/Postgres, real assessment engine
-└── frontend/    Vite + React + Tailwind UI
-```
+VULNIX is a full-stack cybersecurity assessment platform designed to provide a unified workflow for security assessment of authorized web applications, APIs, source-code projects, and application configurations.
 
-## Run it (two terminals)
+The platform follows a simple assessment model:
 
-**Terminal 1 — backend**
-```bash
-cd backend
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-cp .env.example .env        # set JWT_SECRET to a real random value
-uvicorn app.main:app --reload --port 8000
-```
+**ONE URL or ONE ZIP → AUTOMATIC SECURITY ASSESSMENT → FINDINGS → RISK SCORE → REMEDIATION → RETEST → REPORT**
 
-**Terminal 2 — frontend**
-```bash
-cd frontend
-npm install
-cp .env.example .env        # defaults to http://localhost:8000, fine as-is
-npm run dev
-```
+Instead of requiring users to manually select individual security scanners, VULNIX determines applicable assessment categories based on the supplied target and performs the corresponding security checks.
 
-Open `http://localhost:5173`, sign up, confirm authorization, and run a
-real assessment against a target you're authorized to test (or your own
-project ZIP).
+---
 
-## What's real vs. intentionally out of scope
+## Overview
 
-**Real:** JWT auth, SSRF-guarded URL assessment (HTTP headers, TLS
-handshake/version/cert expiry, `.git`/`.env` exposure, error verbosity),
-zip-slip/zip-bomb-safe ZIP static analysis (hardcoded secrets, debug flags,
-SQL string-concat patterns, unsafe extraction code, dependency advisories),
-live progress via SSE with polling fallback, retest against the live
-target, PDF/JSON/CSV export from actual stored findings, rate limiting,
-audit logging.
+Modern application security often requires multiple tools for different assessment areas such as:
 
-**Out of scope by design:** active exploitation of any kind, and open-ended
-port scanning across arbitrary ranges from a hosted multi-tenant API (both
-legally risky and easy to abuse) — network checks are limited to the
-service already under assessment. See `backend/README.md` for the full
-control list and endpoint reference.
+- Web application security
+- API security
+- Source-code security
+- Dependency analysis
+- Security headers
+- SSL/TLS configuration
+- Authentication and session security
+- Configuration security
+- Network and service assessment
+- Vulnerability assessment
 
-## Troubleshooting
+VULNIX brings these assessment workflows together into a single interface.
 
-- **"Could not reach the VULNIX API"** — backend isn't running, or
-  `VITE_API_BASE_URL` / the login screen's "Backend URL" field points
-  somewhere else. Check `curl http://localhost:8000/health`.
-- **CORS errors in the browser console** — `CORS_ORIGINS` in `backend/.env`
-  defaults to `*`, which covers this. If you've tightened it for
-  deployment, make sure your frontend's real origin is included.
-- **Assessment stuck on "queued"** — check the backend terminal for a
-  traceback; the background job runs in a thread and logs there.
+The platform provides:
+
+- Target submission through URL or ZIP
+- Authorization-aware assessment workflow
+- Automated assessment execution
+- Live assessment progress
+- Security findings
+- Severity classification
+- Risk scoring
+- Finding evidence
+- Remediation guidance
+- Retesting
+- Assessment history
+- Report generation
+- JSON/CSV/PDF export
+
+---
+
+# Core Workflow
+
+```text
+                    ┌─────────────────────┐
+                    │     User / Team      │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                  ┌─────────────────────────┐
+                  │      Target Input       │
+                  │                         │
+                  │   URL  OR  Project ZIP  │
+                  └────────────┬────────────┘
+                               │
+                               ▼
+                  ┌─────────────────────────┐
+                  │ Authorization /         │
+                  │ Target Validation       │
+                  └────────────┬────────────┘
+                               │
+                               ▼
+                  ┌─────────────────────────┐
+                  │ Assessment Engine       │
+                  │                         │
+                  │ URL / ZIP Analysis      │
+                  └────────────┬────────────┘
+                               │
+          ┌────────────────────┼────────────────────┐
+          ▼                    ▼                    ▼
+     Web Security         Source Analysis      Configuration
+     API Security         Dependencies         SSL/TLS
+          │                    │                    │
+          └────────────────────┼────────────────────┘
+                               ▼
+                  ┌─────────────────────────┐
+                  │ Findings & Evidence     │
+                  └────────────┬────────────┘
+                               │
+                               ▼
+                  ┌─────────────────────────┐
+                  │ Risk Scoring            │
+                  │ & Severity              │
+                  └────────────┬────────────┘
+                               │
+                               ▼
+                  ┌─────────────────────────┐
+                  │ Remediation             │
+                  │ Recommendations         │
+                  └────────────┬────────────┘
+                               │
+                               ▼
+                  ┌─────────────────────────┐
+                  │ Retest                  │
+                  └────────────┬────────────┘
+                               │
+                               ▼
+                  ┌─────────────────────────┐
+                  │ Security Report         │
+                  │ PDF / JSON / CSV        │
+                  └─────────────────────────┘
