@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* VULNIX Color System */
+:root {
+  --vulnix-bg: #C5C1C1;
+  --vulnix-surface: #F3F4F4;
+  --vulnix-primary: #49A4BB;
+  --vulnix-secondary: #D8A2A2;
+  --vulnix-text: #2C2C2C;
+  --vulnix-white: #FFFFFF;
+}
+
+/* Global layout */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* Global body styling */
+body {
+  margin: 0;
+  background-color: var(--vulnix-bg);
+  color: var(--vulnix-text);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Text selection */
+::selection {
+  background-color: var(--vulnix-primary);
+  color: var(--vulnix-white);
+}
+
+/* Form elements */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Keyboard focus */
+:focus-visible {
+  outline: 2px solid var(--vulnix-primary);
+  outline-offset: 2px;
+}
